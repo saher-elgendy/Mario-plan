@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { createProject } from '../../store/actions/projectAction';
 
-const CreateProjects = () => {
-    const [formData, setFormDatat] = useState({
+const CreateProjects = (props) => {
+    const [project, setProject] = useState({
         title: '',
         content: ''
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        props.createProject(project)
     };
 
     const handleChange = (e) => {
-        setFormDatat({
-            ...formData,
+        setProject({
+            ...project,
             [e.target.id]: e.target.value
         })
     };
@@ -27,15 +30,21 @@ const CreateProjects = () => {
                 </div>
                 <div className="input-field">
                     <label htmlFor="content">Project Content</label>
-                    <textarea id="content" className="materialize-textarea"></textarea>
+                    <textarea id="content" className="materialize-textarea" onChange={handleChange}></textarea>
                 </div>
+                <button className="btn pink lighten-1">Create Project</button>
             </form>
-
         </div>
     )
 }
 
-export default CreateProjects
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createProject: (project) => dispatch(createProject(project))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(CreateProjects)
 
 
 
