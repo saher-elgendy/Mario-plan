@@ -6,10 +6,14 @@ const initialstate = {
     ]
 }
 export default (state = initialstate, action) => {
-    // eslint-disable-next-line default-case
-    switch (action.type) {
+    switch(action.type) {
         case 'CREATE_PROJECT':
-            console.log(action.project)
+            console.log(action.project);
+            return state;
+            case 'CREATE_ERROR':
+                console.log(action.err);
+                return state;
+            default:
+                return state;
     }
-    return state;
 }
