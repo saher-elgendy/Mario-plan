@@ -2,8 +2,8 @@ import firebase from 'firebase/app';
 import 'materialize-css/dist/css/materialize.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { getFirebase, ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { Provider, useSelector } from 'react-redux';
+import { getFirebase, isLoaded, ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { createFirestoreInstance, getFirestore, reduxFirestore } from 'redux-firestore';
 import thunk from 'redux-thunk';
@@ -33,11 +33,26 @@ const rrfProps = {
   createFirestoreInstance
 }
 
+
+const AuthIsLoaded = ({children}) => {
+  const auth =  useSelector(state => state.firebase.auth);
+
+  if(!isLoaded(auth)) return (
+    <p style={{
+
+    }}>Loading.....</p>
+  )
+  return children;
+}
+
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
-        <App />
+        <AuthIsLoaded>
+          <App />
+        </AuthIsLoaded>
       </ReactReduxFirebaseProvider>
     </Provider>
   </React.StrictMode>,
