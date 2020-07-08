@@ -7,7 +7,6 @@ import SignedOutLinks from './SignedOutLinks';
 
 
 const Navbar = ({ uid }) => {
-    console.log('uid', uid)
     const links = uid ? <SignedInLinks /> : <SignedOutLinks />
     return (
         <nav className="nav-wrapper grey darken-3">
