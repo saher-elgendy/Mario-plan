@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { signIn } from './../../store/actions/authAction';
 
 
-const SignIn = (props) => {
-    const { signIn, authError } = props;
-    console.log(authError)
+const SignIn = ({ signIn, authError, auth }) => {
+
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -22,6 +22,9 @@ const SignIn = (props) => {
         e.preventDefault();
         signIn(formData);
     }
+
+    if (auth.uid) return <Redirect to="/" />
+
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -44,7 +47,8 @@ const SignIn = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        authError: state.auth.authErr
+        authError: state.auth.authErr,
+        auth: state.firebase.auth
     }
 }
 
