@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { createProject } from '../../store/actions/projectAction';
 
-const CreateProjects = ({ auth, createProject }) => {
-
+const CreateProjects = ({ auth, createProject, history }) => {
     const [project, setProject] = useState({
         title: '',
         content: ''
@@ -13,6 +12,7 @@ const CreateProjects = ({ auth, createProject }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         createProject(project);
+        history.push('/');
     };
 
     const handleChange = (e) => {
